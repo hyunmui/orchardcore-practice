@@ -1,0 +1,32 @@
+{% assign cols = Model.Columns | default: 3 %}
+{% assign grid_class = 'grid-cols-1 md:grid-cols-3' %}
+{% if cols == 2 %}
+    {% assign grid_class = 'grid-cols-1 md:grid-cols-2' %}
+{% elsif cols == 4 %}
+    {% assign grid_class = 'grid-cols-2 md:grid-cols-4' %}
+{% endif %}
+
+<section class="py-12 bg-gray-50">
+    <div class="container mx-auto px-4">
+        <div class="grid {{ grid_class }} gap-6">
+            {% for item in Model.Items %}
+            <div class="group relative overflow-hidden rounded-xl shadow-md hover:shadow-xl transition-all duration-300">
+                {% if item.ImageUrl != '' %}
+                <div class="aspect-square overflow-hidden bg-gray-200">
+                    <img src="{{ item.ImageUrl }}" alt="{{ item.Caption }}"
+                        class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                </div>
+                {% endif %}
+                {% if item.Caption != '' %}
+                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
+                    <p class="text-white font-semibold text-sm">{{ item.Caption }}</p>
+                </div>
+                {% endif %}
+                {% if item.LinkUrl != '' %}
+                <a href="{{ item.LinkUrl }}" class="absolute inset-0" aria-label="{{ item.Caption }}"></a>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>

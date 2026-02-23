@@ -1,0 +1,23 @@
+{% assign bg = Model.BackgroundImageUrl | default: '' %}
+<section class="relative min-h-[70vh] flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-900 to-indigo-900"
+    {% if bg != '' %}style="background-image: url('{{ bg }}'); background-size: cover; background-position: center;"{% endif %}>
+    {% if bg != '' %}
+    <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+    {% endif %}
+    <div class="relative z-10 text-center text-white px-4 max-w-4xl mx-auto">
+        <h1 class="text-5xl md:text-7xl font-extrabold mb-6 leading-tight drop-shadow-lg">
+            {{ Model.Title }}
+        </h1>
+        {% if Model.Subtitle != '' %}
+        <p class="text-xl md:text-2xl mb-10 text-gray-200 drop-shadow">
+            {{ Model.Subtitle }}
+        </p>
+        {% endif %}
+        {% if Model.CtaText != '' %}
+        <a href="{{ Model.CtaUrl | default: '#' }}"
+            class="inline-block bg-blue-500 hover:bg-blue-400 text-white font-bold px-10 py-4 rounded-full text-lg transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:-translate-y-1">
+            {{ Model.CtaText }}
+        </a>
+        {% endif %}
+    </div>
+</section>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ Model.Title }} - {{ Site.SiteName }}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    {% style_section "Header" %}
+    {% zone "HeadMeta" %}
+</head>
+<body class="min-h-screen bg-white font-sans antialiased">
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 bg-white shadow-md">
+        <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+            <a href="/" class="text-2xl font-bold text-blue-600">
+                {{ Site.SiteName }}
+            </a>
+            <div class="hidden md:flex items-center gap-6">
+                <a href="/" class="text-gray-700 hover:text-blue-600 transition-colors">홈</a>
+                <a href="/exhibitors" class="text-gray-700 hover:text-blue-600 transition-colors">참가업체</a>
+                <a href="/events" class="text-gray-700 hover:text-blue-600 transition-colors">전시 일정</a>
+                <a href="/announcements" class="text-gray-700 hover:text-blue-600 transition-colors">공지사항</a>
+                <a href="/contact" class="text-gray-700 hover:text-blue-600 transition-colors">문의</a>
+            </div>
+            <!-- Mobile menu button -->
+            <button class="md:hidden text-gray-700" id="mobile-menu-btn">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+        </div>
+        <!-- Mobile menu -->
+        <div class="md:hidden hidden bg-white border-t" id="mobile-menu">
+            <div class="container mx-auto px-4 py-3 flex flex-col gap-3">
+                <a href="/" class="text-gray-700 hover:text-blue-600">홈</a>
+                <a href="/exhibitors" class="text-gray-700 hover:text-blue-600">참가업체</a>
+                <a href="/events" class="text-gray-700 hover:text-blue-600">전시 일정</a>
+                <a href="/announcements" class="text-gray-700 hover:text-blue-600">공지사항</a>
+                <a href="/contact" class="text-gray-700 hover:text-blue-600">문의</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main content -->
+    <main class="flex-1">
+        {% zone "Content" %}
+        {{ Model.Content }}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white mt-16">
+        <div class="container mx-auto px-4 py-10">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">{{ Site.SiteName }}</h3>
+                    <p class="text-gray-400">전시회 공식 웹사이트입니다.</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">빠른 링크</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="/exhibitors" class="hover:text-white transition-colors">참가업체</a></li>
+                        <li><a href="/events" class="hover:text-white transition-colors">전시 일정</a></li>
+                        <li><a href="/announcements" class="hover:text-white transition-colors">공지사항</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">문의</h3>
+                    <p class="text-gray-400">contact@example.com</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-500">
+                &copy; {{ "now" | date: "%Y" }} {{ Site.SiteName }}. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    {% script_section "Footer" %}
+    <script>
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+        btn?.addEventListener('click', () => menu?.classList.toggle('hidden'));
+    </script>
+</body>
+</html>

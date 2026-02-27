@@ -1,0 +1,307 @@
+{
+  "name": "Exhibition Setup",
+  "displayName": "전시회 기본 설정",
+  "description": "전시회 웹사이트 기본 콘텐츠 타입 및 설정",
+  "author": "Exhibition Team",
+  "website": "https://example.com",
+  "version": "1.0.0",
+  "issetuprecipe": true,
+  "categories": ["Exhibition"],
+  "tags": ["exhibition", "cms"],
+  "steps": [
+    {
+      "name": "feature",
+      "enable": [
+        "OrchardCore.Admin",
+        "OrchardCore.Autoroute",
+        "OrchardCore.ContentFields",
+        "OrchardCore.ContentTypes",
+        "OrchardCore.Contents",
+        "OrchardCore.Flows",
+        "OrchardCore.Liquid",
+        "OrchardCore.Media",
+        "OrchardCore.Settings",
+        "OrchardCore.Themes",
+        "OrchardCore.Title",
+        "OrchardCore.Users",
+        "Exhibition.Core",
+        "ExhibitionTheme"
+      ]
+    },
+    {
+      "name": "themes",
+      "admin": "TheAdmin",
+      "site": "ExhibitionTheme"
+    },
+    {
+      "name": "settings",
+      "HomeRoute": {
+        "Action": "Display",
+        "Controller": "Item",
+        "Area": "OrchardCore.Contents",
+        "ContentItemId": ""
+      },
+      "PageSize": 10
+    },
+    {
+      "name": "ContentDefinition",
+      "ContentTypes": [
+        {
+          "Name": "ExhibitionPage",
+          "DisplayName": "전시회 페이지",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": true,
+              "Listable": true,
+              "Draftable": true,
+              "Versionable": true,
+              "Securable": true
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "TitlePartSettings": {
+                  "Options": 0,
+                  "Pattern": ""
+                }
+              }
+            },
+            {
+              "PartName": "FlowPart",
+              "Name": "FlowPart",
+              "Settings": {}
+            },
+            {
+              "PartName": "AutoroutePart",
+              "Name": "AutoroutePart",
+              "Settings": {
+                "AutoroutePartSettings": {
+                  "AllowCustomPath": true,
+                  "Pattern": "{{ ContentItem | display_text | slugify }}",
+                  "ShowHomepageOption": true
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "ExhibitorProfile",
+          "DisplayName": "참가업체 프로필",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": true,
+              "Listable": true,
+              "Draftable": true,
+              "Versionable": true,
+              "Securable": true
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {}
+            },
+            {
+              "PartName": "ExhibitorCardPart",
+              "Name": "ExhibitorCardPart",
+              "Settings": {}
+            },
+            {
+              "PartName": "AutoroutePart",
+              "Name": "AutoroutePart",
+              "Settings": {
+                "AutoroutePartSettings": {
+                  "AllowCustomPath": true,
+                  "Pattern": "exhibitors/{{ ContentItem | display_text | slugify }}"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "ExhibitionEvent",
+          "DisplayName": "전시 일정",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": true,
+              "Listable": true,
+              "Draftable": true,
+              "Versionable": true,
+              "Securable": true
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {}
+            },
+            {
+              "PartName": "SchedulePart",
+              "Name": "SchedulePart",
+              "Settings": {}
+            }
+          ]
+        },
+        {
+          "Name": "Announcement",
+          "DisplayName": "공지사항",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": true,
+              "Listable": true,
+              "Draftable": true,
+              "Versionable": true,
+              "Securable": true
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {}
+            },
+            {
+              "PartName": "HtmlBodyPart",
+              "Name": "HtmlBodyPart",
+              "Settings": {}
+            },
+            {
+              "PartName": "AutoroutePart",
+              "Name": "AutoroutePart",
+              "Settings": {
+                "AutoroutePartSettings": {
+                  "AllowCustomPath": true,
+                  "Pattern": "announcements/{{ ContentItem | display_text | slugify }}"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "HeroBannerWidget",
+          "DisplayName": "히어로 배너 위젯",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Stereotype": "Widget"
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {}
+            },
+            {
+              "PartName": "HeroBannerPart",
+              "Name": "HeroBannerPart",
+              "Settings": {}
+            }
+          ]
+        },
+        {
+          "Name": "ExhibitorCardWidget",
+          "DisplayName": "참가업체 카드 위젯",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Stereotype": "Widget"
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {}
+            },
+            {
+              "PartName": "ExhibitorCardPart",
+              "Name": "ExhibitorCardPart",
+              "Settings": {}
+            }
+          ]
+        },
+        {
+          "Name": "ProductGalleryWidget",
+          "DisplayName": "제품 갤러리 위젯",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Stereotype": "Widget"
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {}
+            },
+            {
+              "PartName": "ProductGalleryPart",
+              "Name": "ProductGalleryPart",
+              "Settings": {}
+            }
+          ]
+        },
+        {
+          "Name": "ScheduleWidget",
+          "DisplayName": "일정표 위젯",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Stereotype": "Widget"
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {}
+            },
+            {
+              "PartName": "SchedulePart",
+              "Name": "SchedulePart",
+              "Settings": {}
+            }
+          ]
+        },
+        {
+          "Name": "ContactFormWidget",
+          "DisplayName": "문의 폼 위젯",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Stereotype": "Widget"
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {}
+            },
+            {
+              "PartName": "ContactFormPart",
+              "Name": "ContactFormPart",
+              "Settings": {}
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "AdminMenu",
+      "data": [
+        {
+          "Id": "exhibition-ai-menu",
+          "Name": "AI 페이지 생성",
+          "Priority": 0,
+          "Url": "/Admin/Exhibition/AI/PageGenerator",
+          "IconClass": "fa fa-magic",
+          "Enabled": true,
+          "Permissions": ["ManageContent"]
+        }
+      ]
+    }
+  ]
+}

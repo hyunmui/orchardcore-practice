@@ -1,0 +1,46 @@
+## .NET
+bin/
+obj/
+*.user
+*.suo
+.vs/
+*.userprefs
+
+## Orchard Core
+App_Data/
+**/wwwroot/media/
+!**/wwwroot/media/.gitkeep
+
+## Environment / Secrets
+.env
+*.env.local
+appsettings.Production.json
+appsettings.Staging.json
+**/secrets.json
+**/*.pfx
+**/*.key
+
+## Docker
+docker-compose.override.yml
+
+## IDE
+.idea/
+*.swp
+*.swo
+.vscode/settings.json
+
+## NuGet
+*.nupkg
+.nuget/
+
+## macOS
+.DS_Store
+
+## Logs
+*.log
+logs/
+
+## Test results
+test-results/
+TestResults/
+coverage/

@@ -1,0 +1,73 @@
+services:
+  web:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: orchardcore-web
+    ports:
+      - "${WEB_PORT:-8080}:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT:-Production}
+      - ConnectionStrings__Default=Server=db;Database=${DB_NAME:-OrchardCore};User Id=${DB_USER:-sa};Password=${DB_PASSWORD};TrustServerCertificate=True;
+      - AI__Claude__ApiKey=${CLAUDE_API_KEY}
+      - AI__Claude__ModelId=${CLAUDE_MODEL_ID:-claude-sonnet-4-6}
+    volumes:
+      - app_data:/app/App_Data
+      - media_files:/app/wwwroot/media
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - exhibition-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/healthz"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: orchardcore-db
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=${DB_PASSWORD:-StrongP@ssw0rd!}
+      - MSSQL_PID=Express
+    volumes:
+      - db_data:/var/opt/mssql
+    networks:
+      - exhibition-net
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P '${DB_PASSWORD:-StrongP@ssw0rd!}' -Q 'SELECT 1' -No -C || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 30s
+
+  adminer:
+    image: adminer:4.8.1
+    container_name: orchardcore-adminer
+    ports:
+      - "${ADMINER_PORT:-8081}:8080"
+    environment:
+      - ADMINER_DEFAULT_SERVER=db
+    networks:
+      - exhibition-net
+    restart: unless-stopped
+    profiles:
+      - dev
+
+volumes:
+  app_data:
+    name: orchardcore_app_data
+  media_files:
+    name: orchardcore_media
+  db_data:
+    name: orchardcore_db_data
+
+networks:
+  exhibition-net:
+    name: exhibition-network
+    driver: bridge
